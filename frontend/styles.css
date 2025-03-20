@@ -1,0 +1,172 @@
+/* General Styles */
+#notification {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 15px; /* Some padding */
+    position: fixed; /* Fixed position */
+    top: 20px; /* Position from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center adjustment */
+    border-radius: 5px; /* Rounded corners */
+    z-index: 1000; /* Ensure it appears above other elements */
+    display: none; /* Initially hidden */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('cafe1.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+
+#login {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#login img {
+    display: block;
+    margin: 0 auto 20px;
+    width: 100px;
+}
+
+/* Header */
+header {
+    background-color: #ff8c00;
+    color: white;
+    padding: 10px 0;
+    font-size: 20px;
+}
+
+/* Navigation */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* Forms */
+form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buttons */
+button {
+    background-color: #ff8c00;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #e07b00;
+}
+
+#menuItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.menu-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-item:hover {
+    transform: scale(1.03);
+}
+
+.food-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.menu-item button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* Cart */
+#cartItems div {
+    background: white;
+    margin: 10px auto;
+    padding: 10px;
+    width: 300px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+#cartItems input {
+    width: 50px;
+    text-align: center;
+}
+
+#loginSection {
+    transition: transform 0.5s ease, rotate 0.5s ease;
+    position: relative;
+    transform-origin: center;
+    perspective: 1000px;
+}
+.move-away {
+    transform: translate(var(--move-x), var(--move-y)) rotate(var(--rotate, 0deg));
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+.registerSection {
+    display: none;
+}
+
+.notification {
+    display: none;
+}
+

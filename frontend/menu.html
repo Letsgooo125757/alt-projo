@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Cafeteria</h1>
+        <nav>
+            <a href="cart.html">Cart</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+    <section id="menu">
+        <h2>Menu</h2>
+        <div id="menuItems">
+            <div class="menu-item">
+                <img src="burger.jpg" alt="Burger" class="food-image">
+                <button onclick="addToCart('Burger', 5)">Burger - $5</button>
+            </div>
+            <div class="menu-item">
+                <img src="pizza.jpg" alt="Pizza" class="food-image">
+                <button onclick="addToCart('Pizza', 8)">Pizza - $8</button>
+            </div>
+            <div class="menu-item">
+                <img src="pasta.jpg" alt="Pasta" class="food-image">
+                <button onclick="addToCart('Pasta', 4)">Pasta - $4</button>
+            </div>
+        </div>
+        <div id="notification"></div>
+    </section>
+    <script>
+        if (!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+        function addToCart(item, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({ item, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Show notification
+            const notification = document.getElementById('notification');
+            notification.innerText = `${item} has been added to your cart!`;
+            notification.style.display = 'block';
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        document.getElementById('logout').addEventListener('click', function() {
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

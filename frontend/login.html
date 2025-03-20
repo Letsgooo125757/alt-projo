@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Cafeteria Management System</h1>
+    </header>
+    <section id="login">
+        <img src="logo1.jpg" alt="Cafeteria Logo" class="logo">
+        <h2>Welcome</h2>
+        <div id="loginSection">
+            <form id="loginForm" action="/backend/user_management.php" method="get" autocomplete="on">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <p id="error-message"></p>
+            </form>
+            <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+        </div>
+        
+        <div id="registerSection">
+            <form id="registerForm">
+                <input type="text" id="newUsername" placeholder="Choose a username" required>
+                <input type="password" id="newPassword" placeholder="Choose a password" required>
+                <button type="submit">Create Account</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+
+    </section>
+    <script>
+        // Store users in localStorage
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([]));
+        }
+
+        // Toggle between login and register forms
+        document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'block';
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+
+        // Add cursor interaction
+        const loginSection = document.getElementById('loginSection');
+        const loginButton = document.querySelector('#loginForm button');
+        
+        loginButton.addEventListener('mousemove', function(e) {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username && !password) {
+                const rect = loginSection.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Increase movement multiplier and add randomness
+                const moveX = (e.clientX - centerX) * 2 + (Math.random() - 0.5) * 200;
+                const moveY = (e.clientY - centerY) * 2 + (Math.random() - 0.5) * 200;
+                
+                loginSection.style.setProperty('--move-x', `${moveX}px`);
+                loginSection.style.setProperty('--move-y', `${moveY}px`);
+                loginSection.style.setProperty('--rotate', `${(Math.random() - 0.5) * 30}deg`);
+                loginSection.classList.add('move-away');
+
+            }
+        });
+
+        loginButton.addEventListener('mouseleave', function() {
+            loginSection.classList.remove('move-away');
+        });
+
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('loggedIn', 'true');
+                window.location.href = 'menu.html';
+            } else {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.innerText = 'Invalid username or password. Please try again.';
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
+            }
+        });
+
+        // Clear error message when typing
+        document.getElementById('username').addEventListener('input', function() {
+            document.getElementById('error-message').style.display = 'none';
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('error-message').style.display = 'none';
+        });
+
+        // Handle registration
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const newUsername = document.getElementById('newUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            if (users.some(u => u.username === newUsername)) {
+                alert('Username already exists. Please choose a different one.');
+            } else {
+                users.push({ username: newUsername, password: newPassword });
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Account created successfully! Please login.');
+                document.getElementById('registerSection').style.display = 'none';
+                document.getElementById('loginSection').style.display = 'block';
+                document.getElementById('registerForm').reset();
+            }
+        });
+
+    </script>
+</body>
+</html>

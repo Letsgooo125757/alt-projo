@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+        <nav>
+            <a href="menu.html">Menu</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+    <section id="cart">
+        <h2>Cart Items</h2>
+        <div id="cartItems"></div>
+        <button id="checkout">Checkout</button>
+    </section>
+    <script>
+        if (!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+        function displayCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContainer = document.getElementById('cartItems');
+            cartContainer.innerHTML = '';
+            cart.forEach((cartItem, index) => {
+                const listItem = document.createElement('div');
+                listItem.innerHTML = `${cartItem.item} - $${cartItem.price} x <input type='number' min='1' value='${cartItem.quantity}' onchange='updateQuantity(${index}, this.value)'> <button onclick='removeFromCart(${index})'>Remove</button>`;
+                cartContainer.appendChild(listItem);
+            });
+        }
+        function updateQuantity(index, quantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity = parseInt(quantity);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+document.getElementById('checkout').addEventListener('click', function() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    // Redirect to card payment link
+    window.location.href = 'https://example.com/card-payment'; // Replace with actual card payment link
+
+
+        });
+        document.getElementById('logout').addEventListener('click', function() {
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        });
+        displayCart();
+    </script>
+</body>
+</html>
