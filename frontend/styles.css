@@ -162,11 +162,11 @@ button:hover {
     display: none;
 }
 
-.registerSection {
+#registerSection {
     display: none;
 }
 
-.notification {
+#notification {
     display: none;
 }
 

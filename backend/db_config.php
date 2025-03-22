@@ -16,4 +16,17 @@ function getDBConnection() {
     
     return $conn;
 }
+
+// function to create a database
+function createDatabase() {
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+    $sql = "CREATE DATABASE CMS";
+    if ($conn->query($sql) === TRUE) {
+        echo "Database created successfully";
+    } else {
+        echo "Error creating database: " . $conn->error;
+    }
+    $conn->close();
+}
+
 ?>
